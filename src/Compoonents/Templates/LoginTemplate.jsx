@@ -15,6 +15,10 @@ export const LoginTemplate = () => {
   return (
     <Container>
       <div className="card">
+        <ContentLogo>
+          <img src={v.logo} />
+          <span>System Sell</span>
+        </ContentLogo>
         <Title $paddingbotton="20px">Login</Title>
         <form action="">
           <InputText2>
@@ -57,6 +61,8 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   flex-direction: column;
+  padding: 0 10px;
+  color: ${({ theme }) => theme.text};
 
   .card {
     display: flex;
@@ -68,5 +74,18 @@ const Container = styled.div`
     @media ${Device.tablet} {
       width: 400px;
     }
+  }
+`;
+
+const ContentLogo = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  span {
+    font-weight: 700;
+  }
+  img {
+    width: 10%;
   }
 `;

@@ -5,29 +5,37 @@ import {
   MyRoutes,
   Sidebar,
   useThemeStore,
+  LoginPage,
 } from "./index.js";
 import { Device } from "./Styles/BreakPionts.jsx";
 import { useState } from "react";
+import { useLocation } from "react-router";
 
 function App() {
   const [siderbarOpen, setSiderbarOpen] = useState(false);
   const { themeStyle } = useThemeStore();
+  const { pathname } = useLocation();
+
   return (
     <ThemeProvider theme={themeStyle}>
       <AuthContextProvider>
-        <Container className={siderbarOpen ? "active" : ""}>
-          <GlobalStyle />
-          <section className="contentSidebar">
-            <Sidebar
-              state={siderbarOpen}
-              setState={() => setSiderbarOpen(!siderbarOpen)}
-            />
-          </section>
-          <section className="contentMenuHamburger">Hamburger</section>
-          <section className="contentRouters">
-            <MyRoutes />
-          </section>
-        </Container>
+        <GlobalStyle />
+        {pathname != "/login" ? (
+          <Container className={siderbarOpen ? "active" : ""}>
+            <section className="contentSidebar">
+              <Sidebar
+                state={siderbarOpen}
+                setState={() => setSiderbarOpen(!siderbarOpen)}
+              />
+            </section>
+            <section className="contentMenuHamburger">Hamburger</section>
+            <section className="contentRouters">
+              <MyRoutes />
+            </section>
+          </Container>
+        ) : (
+          <LoginPage />
+        )}
       </AuthContextProvider>
     </ThemeProvider>
   );
