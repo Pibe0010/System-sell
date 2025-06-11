@@ -9,7 +9,6 @@ export const HomeTemplate = () => {
     <Container>
       <span>HomeTemplate</span>
       <button onClick={closeSession}>logout</button>
-      <span>{user.id}</span>
     </Container>
   );
 };

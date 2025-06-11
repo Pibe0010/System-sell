@@ -22,3 +22,4 @@ export * from "./Compoonents/Body/Footer.jsx";
 export * from "./Supabase/supabase.config.js";
 export * from "./Stores/AuthStore.jsx";
 export * from "./Context/AuthContext.jsx";
+export * from "./Hooks/ProtectedRoute.jsx";
