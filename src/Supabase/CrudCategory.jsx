@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import { supabase } from "../index";
 const table = "categorys";
 
-export const insertCategory = async (params, file) => {
+export const InsertCategory = async (params, file) => {
   const { error, data } = await supabase.rpc("insert_category", params);
 
   if (error) {

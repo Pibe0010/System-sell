@@ -23,3 +23,6 @@ export * from "./Supabase/supabase.config.js";
 export * from "./Stores/AuthStore.jsx";
 export * from "./Context/AuthContext.jsx";
 export * from "./Hooks/ProtectedRoute.jsx";
+export * from "./Supabase/CrudCategory.jsx";
+export * from "./Supabase/CradCompany.jsx";
+export * from "./Stores/CompanyStore.jsx";
