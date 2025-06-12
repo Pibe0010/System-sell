@@ -26,3 +26,6 @@ export * from "./Hooks/ProtectedRoute.jsx";
 export * from "./Supabase/CrudCategory.jsx";
 export * from "./Supabase/CradCompany.jsx";
 export * from "./Stores/CompanyStore.jsx";
+export * from "./Supabase/CrudUser.jsx";
+export * from "./Supabase/CrudDocumentType.jsx";
+export * from "./Supabase/CrudRoles.jsx";
