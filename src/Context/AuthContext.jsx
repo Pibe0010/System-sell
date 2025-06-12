@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { supabase } from "../Supabase/supabase.config";
+import { supabase } from "../index.js";
 import {
   AddDocumentType,
   AddRoleName,
@@ -35,9 +35,11 @@ export const AuthContextProvider = ({ children }) => {
       return;
     } else {
       const companyResponse = await InsertCompany({ id_auth: id_auth });
+
       const typeDocResponse = await AddDocumentType({
         id_company: companyResponse?.id,
       });
+
       const roleResponse = await AddRoleName({ name: "supaAdmin" });
 
       const userParams = {

@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { supabase } from "../index";
 
 const table = "users";
