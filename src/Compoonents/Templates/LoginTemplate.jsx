@@ -14,7 +14,7 @@ export const LoginTemplate = () => {
   const { loginGoogle } = useAuthStore();
   return (
     <Container>
-      <div className="card">
+      <div className="login-card">
         <ContentLogo>
           <img src={v.logo} />
           <span>System Sell</span>
@@ -64,7 +64,7 @@ const Container = styled.div`
   padding: 0 10px;
   color: ${({ theme }) => theme.text};
 
-  .card {
+  .login-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
