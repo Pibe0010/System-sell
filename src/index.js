@@ -31,3 +31,7 @@ export * from "./Supabase/CrudDocumentType.jsx";
 export * from "./Supabase/CrudRoles.jsx";
 export * from "./Compoonents/Templates/SettingsTemplate.jsx";
 export * from "./Pages/SettignsPage.jsx";
+export * from "./Pages/CategorysPage.jsx";
+export * from "./Compoonents/Templates/CategoryTemplate.jsx";
+export * from "./Supabase/CrudModules.jsx";
+export * from "./Stores/ModulesStore.jsx";
