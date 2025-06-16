@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { DataModulosConfiguracion } from "../../Utils/dataStatica";
 import { useEffect } from "react";
+import { useModulesStore } from "../../index.js";
 
 export const SettingsTemplate = () => {
+  const { dataModules } = useModulesStore();
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       document.querySelectorAll(".card").forEach((card) => {
@@ -29,24 +31,24 @@ export const SettingsTemplate = () => {
   return (
     <Container>
       <div id="cards">
-        {DataModulosConfiguracion.map((item, index) => {
+        {dataModules.map((item, index) => {
           return (
             <Link
-              to=""
+              to={item.link}
               className={item.state ? "card" : "card false"}
               key={index}
             >
               <div className="card-content">
                 <div className="card-image">
-                  <img src={item.icono} />
+                  <img src={item.icon} />
                 </div>
 
                 <div className="card-info-wrapper">
                   <div className="card-info">
                     <i className="fa-duotone fa-unicorn"></i>
                     <div className="card-info-title">
-                      <h3>{item.title}</h3>
-                      <h4>{item.subtitle}</h4>
+                      <h3>{item.name}</h3>
+                      <h4>{item.description}</h4>
                     </div>
                   </div>
                 </div>
