@@ -10,6 +10,7 @@ import {
 import { Device } from "./Styles/BreakPionts.jsx";
 import { useState } from "react";
 import { useLocation } from "react-router";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
   const [siderbarOpen, setSiderbarOpen] = useState(false);
@@ -36,6 +37,7 @@ function App() {
         ) : (
           <LoginPage />
         )}
+        <ReactQueryDevtools initialIsOpen={true} />
       </AuthContextProvider>
     </ThemeProvider>
   );
