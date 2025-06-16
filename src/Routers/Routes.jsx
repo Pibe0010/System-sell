@@ -15,7 +15,7 @@ export const MyRoutes = () => {
       <Route element={<ProtectedRoute user={user} redirectTo="/login" />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/settings" element={<SettignsPage />} />
-        <Route path="/settings/category" element={<CategorysPage />} />
+        <Route path="/settings/categories" element={<CategorysPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>

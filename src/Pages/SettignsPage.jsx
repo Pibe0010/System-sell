@@ -1,4 +1,4 @@
-import { SettingsTemplate, useModulesStore } from "../index.js";
+import { SettingsTemplate, Spinner_one, useModulesStore } from "../index.js";
 import { useQuery } from "@tanstack/react-query";
 
 export const SettignsPage = () => {
@@ -8,7 +8,7 @@ export const SettignsPage = () => {
     queryFn: addModules,
   });
 
-  if (isLoading) return <span>Loading....</span>;
+  if (isLoading) return <Spinner_one />;
   if (error) return <span>Error....</span>;
   return <SettingsTemplate />;
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {
-  Btnsave,
+  BtnOne,
   Footer,
   InputText2,
   Line,
@@ -31,7 +31,7 @@ export const LoginTemplate = () => {
               placeholder="Password"
             />
           </InputText2>
-          <Btnsave
+          <BtnOne
             titulo="Singup"
             bgcolor="#1CB0F6"
             color="255, 255, 255"
@@ -41,7 +41,7 @@ export const LoginTemplate = () => {
         <Line>
           <span>O</span>
         </Line>
-        <Btnsave
+        <BtnOne
           titulo="Google"
           bgcolor="#fff"
           icono={<v.iconogoogle />}
