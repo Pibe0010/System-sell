@@ -36,3 +36,5 @@ export * from "./Compoonents/Templates/CategoryTemplate.jsx";
 export * from "./Supabase/CrudModules.jsx";
 export * from "./Stores/ModulesStore.jsx";
 export * from "./Compoonents/Molecules/Spinner_one.jsx";
+export * from "./Compoonents/Body/Search.jsx";
+export * from "./Supabase/CrudCategory.jsx";
