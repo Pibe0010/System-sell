@@ -36,3 +36,25 @@ export const InsertAdmin = async (params) => {
 
   return data;
 };
+
+export const AddAuthIdSupabase = async () => {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.message,
+    });
+    return;
+  }
+
+  if (session != null) {
+    const { user } = session;
+    const idAtuh = user.id;
+    return idAtuh;
+  }
+};

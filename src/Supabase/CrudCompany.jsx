@@ -21,3 +21,11 @@ export const InsertCompany = async (params) => {
 
   return data;
 };
+
+export const AddCompanyFromId = async (params) => {
+  const { data } = await supabase
+    .rpc("add_company_from_id", params)
+    .maybeSingle();
+
+  return data;
+};

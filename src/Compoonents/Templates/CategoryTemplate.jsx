@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import { BtnOne, Search, Title } from "../../index.js";
+import {
+  BtnOne,
+  Search,
+  TableCategories,
+  Title,
+  useCategoriesStore,
+} from "../../index.js";
 import { v } from "../../Styles/variables.jsx";
 
 export const CategoryTemplate = () => {
+  const { dataCategories } = useCategoriesStore();
+
   return (
     <Container>
       <section className="area1">
@@ -16,7 +24,9 @@ export const CategoryTemplate = () => {
       <section className="area2">
         <Search />
       </section>
-      <section className="main">main</section>
+      <section className="main">
+        <TableCategories data={dataCategories} />
+      </section>
     </Container>
   );
 };
