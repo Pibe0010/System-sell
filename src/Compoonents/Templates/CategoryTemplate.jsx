@@ -1,24 +1,43 @@
 import styled from "styled-components";
 import {
   BtnOne,
+  RegisterCategories,
   Search,
   TableCategories,
   Title,
   useCategoriesStore,
 } from "../../index.js";
 import { v } from "../../Styles/variables.jsx";
+import { useState } from "react";
 
 export const CategoryTemplate = () => {
   const { dataCategories } = useCategoriesStore();
+  const [openRegister, setOpenRegister] = useState(false);
+  const [action, setAction] = useState("");
+  const [dataSelect, setDataSelect] = useState({});
+
+  const newRegister = () => {
+    setOpenRegister(!openRegister);
+    setAction("new");
+    setDataSelect([]);
+  };
 
   return (
     <Container>
+      {openRegister && (
+        <RegisterCategories
+          dataSelect={dataSelect}
+          action={action}
+          onClose={() => setOpenRegister(!openRegister)}
+        />
+      )}
       <section className="area1">
         <Title>Categories</Title>
         <BtnOne
           bgcolor={v.colorPrincipal}
           titulo="New"
           icono={<v.iconoagregar />}
+          funcion={newRegister}
         />
       </section>
       <section className="area2">
