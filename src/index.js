@@ -44,3 +44,6 @@ export * from "./Compoonents/Body/Table/TableCategories.jsx";
 export * from "./Stores/CategoriesStore.jsx";
 export * from "./Stores/UserStore.jsx";
 export * from "./Compoonents/Molecules/ImageContent.jsx";
+export * from "./Compoonents/Body/Form/InputText.jsx";
+export * from "./Compoonents/Body/Form/RegisterCategories.jsx";
+export * from "./Utils/Transformation.jsx";
