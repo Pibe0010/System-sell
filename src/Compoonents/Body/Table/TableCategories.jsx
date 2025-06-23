@@ -30,9 +30,9 @@ export const TableCategories = ({
   const [datas, setData] = useState(data);
   const [columnFilters, setColumnFilters] = useState([]);
 
-  const { eliminarCategoria } = useCategoriesStore();
-  const deleter = async (p) => {
-    if (p.name === "Generic") {
+  const { deleteCategories } = useCategoriesStore();
+  const deleter = async (params) => {
+    if (params.name === "Generic") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -51,7 +51,7 @@ export const TableCategories = ({
       confirmButtonText: "Si, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await eliminarCategoria({ id: p.id });
+        await deleteCategories({ id: params.id });
       }
     });
   };
@@ -120,7 +120,7 @@ export const TableCategories = ({
       enableSorting: false,
       cell: (info) => (
         <td data-title="Color" className="ContentCell">
-          <Colorcontent color={info.getValue()} $alto="25px" $ancho="25px" />
+          <ColorContent color={info.getValue()} $alto="25px" $ancho="25px" />
         </td>
       ),
 
@@ -132,11 +132,11 @@ export const TableCategories = ({
       },
     },
     {
-      accessorKey: "acciones",
+      accessorKey: "actions",
       header: "",
       enableSorting: false,
       cell: (info) => (
-        <td data-title="Acciones" className="ContentCell">
+        <td data-title="Actions" className="ContentCell">
           <ContentActionsTable
             funcionEditar={() => update(info.row.original)}
             funcionEliminar={() => deleter(info.row.original)}
@@ -383,7 +383,7 @@ const Container = styled.div`
     }
   }
 `;
-const Colorcontent = styled.div`
+const ColorContent = styled.div`
   justify-content: center;
   min-height: ${(props) => props.$alto};
   width: ${(props) => props.$ancho};
