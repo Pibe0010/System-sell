@@ -75,13 +75,13 @@ export const TableCategories = ({
       header: "Icon",
       enableSorting: false,
       cell: (info) => (
-        <td data-title="Color" className="ContentCell">
+        <span data-title="Color" className="ContentCell">
           {info.getValue() != "-" ? (
-            <ImageContent imagen={info.getValue()} />
+            <ImageContent image={info.getValue()} />
           ) : (
             <Icono>{<v.iconoimagenvacia />}</Icono>
           )}
-        </td>
+        </span>
       ),
 
       enableColumnFilter: true,
@@ -119,9 +119,9 @@ export const TableCategories = ({
       header: "Color",
       enableSorting: false,
       cell: (info) => (
-        <td data-title="Color" className="ContentCell">
+        <span data-title="Color" className="ContentCell">
           <ColorContent color={info.getValue()} $alto="25px" $ancho="25px" />
-        </td>
+        </span>
       ),
 
       enableColumnFilter: true,
@@ -136,12 +136,12 @@ export const TableCategories = ({
       header: "",
       enableSorting: false,
       cell: (info) => (
-        <td data-title="Actions" className="ContentCell">
+        <span data-title="Actions" className="ContentCell">
           <ContentActionsTable
             funcionEditar={() => update(info.row.original)}
             funcionEliminar={() => deleter(info.row.original)}
           />
-        </td>
+        </span>
       ),
       enableColumnFilter: true,
       filterFn: (row, columnId, filterStatuses) => {
@@ -292,6 +292,7 @@ const Container = styled.div`
       padding: 0;
       text-align: left;
       white-space: normal;
+      color: ${({ theme }) => theme.text};
     }
     tr {
       

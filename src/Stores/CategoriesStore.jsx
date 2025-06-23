@@ -27,7 +27,7 @@ export const useCategoriesStore = create((set, get) => ({
     set({ categoriesItemSelect: params });
   },
 
-  insertCategories: async (params) => {
+  insertCategories: async (params, file) => {
     await InsertCategory(params, file);
     const { addCategories } = get();
     const { insertParams } = get();

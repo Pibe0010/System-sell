@@ -65,7 +65,7 @@ export const RegisterCategories = ({
       const params = {
         _name: Transformation(data.description),
         _color: currentColor,
-        _icono: "-",
+        _icon: "-",
         _id_company: dataCompany.id,
       };
 
