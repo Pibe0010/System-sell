@@ -7,12 +7,20 @@ import {
 } from "../index.js";
 
 export const CategorysPage = () => {
-  const { addCategories } = useCategoriesStore();
+  const { addCategories, searchCategories, search } = useCategoriesStore();
   const { dataCompany } = useCompanyStore();
 
   const { isLoading, error } = useQuery({
     queryKey: ["add categories", dataCompany?.id],
     queryFn: () => addCategories({ id_company: dataCompany?.id }),
+    enabled: !!dataCompany,
+    refetchOnWindowFocus: false,
+  });
+
+  const {} = useQuery({
+    queryKey: ["search categories", search],
+    queryFn: () =>
+      searchCategories({ id_company: dataCompany?.id, description: search }),
     enabled: !!dataCompany,
     refetchOnWindowFocus: false,
   });

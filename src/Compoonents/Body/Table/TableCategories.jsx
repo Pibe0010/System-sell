@@ -21,8 +21,8 @@ import { FaArrowsAltV } from "react-icons/fa";
 
 export const TableCategories = ({
   data,
-  SetopenRegistro,
-  setdataSelect,
+  setOpenRegister,
+  setDataSelect,
   setAccion,
 }) => {
   if (data == null) return;
@@ -42,13 +42,13 @@ export const TableCategories = ({
       return;
     }
     Swal.fire({
-      title: "¿You're sure(a)(e)?",
+      title: "¿You're sure.?",
       text: "Once deleted, you will not be able to recover this record!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, delete it!",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteCategories({ id: params.id });
@@ -65,8 +65,8 @@ export const TableCategories = ({
       });
       return;
     }
-    SetopenRegistro(true);
-    setdataSelect(data);
+    setOpenRegister(true);
+    setDataSelect(data);
     setAccion("Update");
   };
   const columns = [
@@ -91,17 +91,7 @@ export const TableCategories = ({
         return filterStatuses.includes(status?.id);
       },
     },
-    {
-      accessorKey: "id",
-      header: "Id",
-      cell: (info) => <span>{info.getValue()}</span>,
-      enableColumnFilter: true,
-      filterFn: (row, columnId, filterStatuses) => {
-        if (filterStatuses.length === 0) return true;
-        const status = row.getValue(columnId);
-        return filterStatuses.includes(status?.id);
-      },
-    },
+
     {
       accessorKey: "name",
       header: "Description",
@@ -132,14 +122,14 @@ export const TableCategories = ({
       },
     },
     {
-      accessorKey: "actions",
+      accessorKey: "Actions",
       header: "",
       enableSorting: false,
       cell: (info) => (
         <span data-title="Actions" className="ContentCell">
           <ContentActionsTable
-            funcionEditar={() => update(info.row.original)}
-            funcionEliminar={() => deleter(info.row.original)}
+            handlerUpdate={() => update(info.row.original)}
+            handlerDelete={() => deleter(info.row.original)}
           />
         </span>
       ),

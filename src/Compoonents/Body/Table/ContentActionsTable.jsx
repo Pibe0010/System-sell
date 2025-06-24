@@ -3,20 +3,20 @@ import { ActionsTable } from "../../../index.js";
 import { v } from "../../../Styles/variables.jsx";
 import { Icon } from "@iconify/react";
 
-export function ContentActionsTable({ funcionEditar, funcionEliminar }) {
+export function ContentActionsTable({ handlerUpdate, handlerDelete }) {
   return (
     <Container>
       <ActionsTable
-        funcion={funcionEditar}
+        funcion={handlerUpdate}
         fontSize="18px"
         color="#7d7d7d"
         icono={<v.iconeditarTabla />}
       />
       <ActionsTable
-        funcion={funcionEliminar}
+        funcion={handlerDelete}
         fontSize="20px"
-        color="#f76e8e"
-        icono={<Icon icon="fluent-emoji-high-contrast:skull" />}
+        color="#f76e6e"
+        icono={<v.iconeliminarTabla />}
       />
     </Container>
   );

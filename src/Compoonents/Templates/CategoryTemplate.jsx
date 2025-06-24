@@ -11,7 +11,7 @@ import { v } from "../../Styles/variables.jsx";
 import { useState } from "react";
 
 export const CategoryTemplate = () => {
-  const { dataCategories } = useCategoriesStore();
+  const { dataCategories, setSearch } = useCategoriesStore();
   const [openRegister, setOpenRegister] = useState(false);
   const [action, setAction] = useState("");
   const [dataSelect, setDataSelect] = useState({});
@@ -41,10 +41,15 @@ export const CategoryTemplate = () => {
         />
       </section>
       <section className="area2">
-        <Search />
+        <Search setSearch={setSearch} />
       </section>
       <section className="main">
-        <TableCategories data={dataCategories} />
+        <TableCategories
+          data={dataCategories}
+          setOpenRegister={setOpenRegister}
+          setAccion={setAction}
+          setDataSelect={setDataSelect}
+        />
       </section>
     </Container>
   );
@@ -57,7 +62,6 @@ const Container = styled.div`
   grid-template: "area1" 60px "area2" 60px "main" auto;
   .area1 {
     grid-area: area1;
-    background-color: rgba(70, 241, 70, 0.3);
     display: flex;
     justify-content: end;
     align-items: center;
@@ -65,13 +69,11 @@ const Container = styled.div`
   }
   .area2 {
     grid-area: area2;
-    background-color: rgba(58, 67, 235, 0.3);
     display: flex;
     justify-content: end;
     align-items: center;
   }
   .main {
     grid-area: main;
-    background-color: rgba(235, 58, 58, 0.3);
   }
 `;

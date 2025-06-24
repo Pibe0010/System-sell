@@ -54,7 +54,7 @@ export const RegisterCategories = ({ onClose, dataSelect, action }) => {
         _color: currentColor,
         _id: dataSelect.id,
       };
-      await updateCategories(params, dataSelect.icono, file);
+      await updateCategories(params, dataSelect.icon, file);
     } else {
       const params = {
         _name: Transformation(data.description),
