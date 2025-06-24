@@ -19,12 +19,14 @@ export const MyRoutes = () => {
   const { isLoading, error } = useQuery({
     queryKey: ["add user"],
     queryFn: addUser,
+    refetchOnWindowFocus: false,
   });
 
   const {} = useQuery({
     queryKey: ["add company", dataUser?.id],
     queryFn: () => addCompany({ _id_user: dataUser?.id }),
     enabled: !!dataUser,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) return <Spinner_one />;

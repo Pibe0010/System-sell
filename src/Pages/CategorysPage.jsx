@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   CategoryTemplate,
+  Spinner_one,
   useCategoriesStore,
   useCompanyStore,
 } from "../index.js";
@@ -8,10 +9,16 @@ import {
 export const CategorysPage = () => {
   const { addCategories } = useCategoriesStore();
   const { dataCompany } = useCompanyStore();
-  const {} = useQuery({
+
+  const { isLoading, error } = useQuery({
     queryKey: ["add categories", dataCompany?.id],
     queryFn: () => addCategories({ id_company: dataCompany?.id }),
+    enabled: !!dataCompany,
+    refetchOnWindowFocus: false,
   });
+
+  if (isLoading) return <Spinner_one />;
+  if (error) return <span>Error....</span>;
 
   return <CategoryTemplate />;
 };
