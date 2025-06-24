@@ -13,12 +13,7 @@ import { CirclePicker } from "react-color";
 import { useCompanyStore } from "../../../Stores/CompanyStore.jsx";
 import { useMutation } from "@tanstack/react-query";
 
-export const RegisterCategories = ({
-  onClose,
-  dataSelect,
-  action,
-  setIsExploding,
-}) => {
+export const RegisterCategories = ({ onClose, dataSelect, action }) => {
   const { insertCategories, updateCategories } = useCategoriesStore();
   const { dataCompany } = useCompanyStore();
   const [currentColor, setColor] = useState("#F44336");
@@ -49,7 +44,6 @@ export const RegisterCategories = ({
 
   const closeForm = () => {
     onClose();
-    setIsExploding(true);
   };
 
   async function insert(data) {
