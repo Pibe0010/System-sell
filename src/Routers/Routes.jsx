@@ -3,6 +3,7 @@ import {
   CategorysPage,
   HomePage,
   LoginPage,
+  ProductPage,
   ProtectedRoute,
   SettignsPage,
   Spinner_one,
@@ -38,6 +39,7 @@ export const MyRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/settings" element={<SettignsPage />} />
         <Route path="/settings/categories" element={<CategorysPage />} />
+        <Route path="/settings/products" element={<ProductPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>
