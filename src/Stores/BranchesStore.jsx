@@ -8,6 +8,7 @@ export const useBranchesStore = create((set) => ({
   addBranches: async (params) => {
     const response = await AddBranches(params);
     set({ dataBranch: response });
+    set({ branchItemSelect: response[0] });
 
     return response;
   },
