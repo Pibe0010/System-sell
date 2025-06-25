@@ -56,3 +56,5 @@ export * from "./Compoonents/Body/Form/RegisterProduct.jsx";
 export * from "./Compoonents/Body/SwitchOne.jsx";
 export * from "./Compoonents/Atoms/ContainerSelector.jsx";
 export * from "./Compoonents/Body/Selector.jsx";
+export * from "./Supabase/CrudBranch.jsx";
+export * from "./Stores/BranchesStore.jsx";

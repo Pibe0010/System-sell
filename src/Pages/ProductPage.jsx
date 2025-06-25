@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   ProductTemplate,
   Spinner_one,
+  useBranchesStore,
   useCompanyStore,
   useProductsStore,
 } from "../index.js";
@@ -9,6 +10,7 @@ import {
 export const ProductPage = () => {
   const { addProduct, searchProduct, search } = useProductsStore();
   const { dataCompany } = useCompanyStore();
+  const { addBranches } = useBranchesStore();
 
   const { isLoading, error } = useQuery({
     queryKey: ["add product", dataCompany?.id],
@@ -21,6 +23,13 @@ export const ProductPage = () => {
     queryKey: ["search product", search],
     queryFn: () =>
       searchProduct({ id_company: dataCompany?.id, description: search }),
+    enabled: !!dataCompany,
+    refetchOnWindowFocus: false,
+  });
+
+  const {} = useQuery({
+    queryKey: ["add branch", dataCompany?.id],
+    queryFn: () => addBranches({ id_company: dataCompany?.id }),
     enabled: !!dataCompany,
     refetchOnWindowFocus: false,
   });
