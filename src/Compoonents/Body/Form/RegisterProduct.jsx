@@ -5,14 +5,20 @@ import {
   BtnOne,
   Transformation,
   useProductsStore,
+  ContainerSelector,
+  SwitchOne,
+  Selector,
 } from "../../../index.js";
 import { useForm } from "react-hook-form";
 import { useCompanyStore } from "../../../Stores/CompanyStore.jsx";
 import { useMutation } from "@tanstack/react-query";
+import { Device } from "../../../Styles/BreakPionts.jsx";
+import { useState } from "react";
 
 export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const { insertProduct, updateProduct } = useProductsStore();
   const { dataCompany } = useCompanyStore();
+  const [inentoryState, setInentoryState] = useState(false);
 
   const {
     register,
@@ -77,7 +83,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
           </div>
 
           <form className="formulario" onSubmit={handleSubmit(handleSub)}>
-            <section className="form-subcontainer">
+            <section className="section_one">
               <article>
                 <InputText icono={<v.iconoflechaderecha />}>
                   <input
@@ -95,13 +101,136 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                   )}
                 </InputText>
               </article>
-
-              <BtnOne
-                icono={<v.iconoguardar />}
-                titulo="Guardar"
-                bgcolor="#0ba6f9"
-              />
+              <article>
+                <InputText icono={<v.iconoflechaderecha />}>
+                  <input
+                    className="form__field"
+                    defaultValue={dataSelect.price_sale}
+                    type="number"
+                    step="0.01"
+                    placeholder="price-sale"
+                    {...register("price_sale", {
+                      required: true,
+                    })}
+                  />
+                  <label className="form__label">price-sale</label>
+                  {errors.description?.type === "required" && (
+                    <p>Required field</p>
+                  )}
+                </InputText>
+              </article>
+              <article>
+                <InputText icono={<v.iconoflechaderecha />}>
+                  <input
+                    className="form__field"
+                    defaultValue={dataSelect.price_buys}
+                    type="number"
+                    step="0.01"
+                    placeholder="price-buys"
+                    {...register("price_buys", {
+                      required: true,
+                    })}
+                  />
+                  <label className="form__label">price-buys</label>
+                  {errors.description?.type === "required" && (
+                    <p>Required field</p>
+                  )}
+                </InputText>
+              </article>
+              <article>
+                <InputText icono={<v.iconoflechaderecha />}>
+                  <input
+                    className="form__field"
+                    defaultValue={dataSelect.bar_code}
+                    type="text"
+                    placeholder="bar-code"
+                    {...register("bar_code", {
+                      required: true,
+                    })}
+                  />
+                  <label className="form__label">bar-code</label>
+                  {errors.description?.type === "required" && (
+                    <p>Required field</p>
+                  )}
+                </InputText>
+              </article>
+              <article>
+                <InputText icono={<v.iconoflechaderecha />}>
+                  <input
+                    className="form__field"
+                    defaultValue={dataSelect.bar_code_internal}
+                    type="text"
+                    placeholder="bar-code-int"
+                    {...register("bar_code_internal", {
+                      required: true,
+                    })}
+                  />
+                  <label className="form__label">bar-code-int</label>
+                  {errors.description?.type === "required" && (
+                    <p>Required field</p>
+                  )}
+                </InputText>
+              </article>
             </section>
+            <section className="section_two">
+              <ContainerSelector>
+                <label>Control stock</label>
+                <SwitchOne
+                  state={inentoryState}
+                  setState={() => setInentoryState(!inentoryState)}
+                />
+              </ContainerSelector>
+              {inentoryState && (
+                <ContainerStock>
+                  <ContainerSelector>
+                    <label>branches:</label>
+                    <Selector color="#1a58eb" textOne="🖥️" />
+                  </ContainerSelector>
+                  <article>
+                    <InputText icono={<v.iconoflechaderecha />}>
+                      <input
+                        className="form__field"
+                        defaultValue={dataSelect.stock}
+                        type="number"
+                        step="0.01"
+                        placeholder="stock"
+                        {...register("tock", {
+                          required: true,
+                        })}
+                      />
+                      <label className="form__label">stock</label>
+                      {errors.description?.type === "required" && (
+                        <p>Required field</p>
+                      )}
+                    </InputText>
+                  </article>
+                  <article>
+                    <InputText icono={<v.iconoflechaderecha />}>
+                      <input
+                        className="form__field"
+                        defaultValue={dataSelect.min_stock}
+                        type="number"
+                        step="0.01"
+                        placeholder="min-stock"
+                        {...register("min_stock", {
+                          required: true,
+                        })}
+                      />
+                      <label className="form__label">min-stock</label>
+                      {errors.description?.type === "required" && (
+                        <p>Required field</p>
+                      )}
+                    </InputText>
+                  </article>
+                </ContainerStock>
+              )}
+            </section>
+
+            <BtnOne
+              icono={<v.iconoguardar />}
+              titulo="Guardar"
+              bgcolor="#0ba6f9"
+            />
           </form>
         </div>
       )}
@@ -120,11 +249,12 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  color: ${({ theme }) => theme.text};
 
   .sub-contenedor {
     position: relative;
-    width: 500px;
-    max-width: 85%;
+    width: 100%;
+    max-width: 90%;
     border-radius: 20px;
     background: ${({ theme }) => theme.bgtotal};
     box-shadow: -10px 15px 30px rgba(10, 9, 9, 0.4);
@@ -149,60 +279,25 @@ const Container = styled.div`
       }
     }
     .formulario {
-      .form-subcontainer {
-        gap: 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      @media ${Device.tablet} {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      section {
         display: flex;
+        gap: 20px;
         flex-direction: column;
-        .colorContainer {
-          color: ${({ theme }) => theme.text};
-          .colorPickerContent {
-            padding-top: 15px;
-            min-height: 50px;
-          }
-        }
       }
     }
   }
 `;
 
-const ContentTitle = styled.div`
+const ContainerStock = styled.div`
   display: flex;
-  justify-content: start;
-  align-items: center;
-  gap: 20px;
-
-  svg {
-    font-size: 25px;
-  }
-  input {
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 2px;
-    width: 40px;
-    font-size: 28px;
-  }
-`;
-const PictureContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  border: 2px dashed #f90b0b;
-  border-radius: 5px;
-  background-color: rgba(249, 11, 11, 0.1);
-  padding: 8px;
-  position: relative;
-  gap: 3px;
-  margin-bottom: 8px;
-
-  .ContentImage {
-    overflow: hidden;
-    img {
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-  input {
-    display: none;
-  }
+  flex-direction: column;
+  border: 1px solid rgba(11, 178, 249, 0.9);
+  border-radius: 15px;
+  padding: 12px;
 `;

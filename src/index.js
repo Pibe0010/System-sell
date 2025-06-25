@@ -53,3 +53,6 @@ export * from "./Supabase/CrudProducts.jsx";
 export * from "./Stores/ProductStore.jsx";
 export * from "./Compoonents/Body/Table/TableProducts.jsx";
 export * from "./Compoonents/Body/Form/RegisterProduct.jsx";
+export * from "./Compoonents/Body/SwitchOne.jsx";
+export * from "./Compoonents/Atoms/ContainerSelector.jsx";
+export * from "./Compoonents/Body/Selector.jsx";
