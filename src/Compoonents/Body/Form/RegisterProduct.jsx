@@ -8,6 +8,8 @@ import {
   ContainerSelector,
   SwitchOne,
   Selector,
+  useBranchesStore,
+  DropDawnList,
 } from "../../../index.js";
 import { useForm } from "react-hook-form";
 import { useCompanyStore } from "../../../Stores/CompanyStore.jsx";
@@ -19,6 +21,8 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const { insertProduct, updateProduct } = useProductsStore();
   const { dataCompany } = useCompanyStore();
   const [inentoryState, setInentoryState] = useState(false);
+  const [showBranchList, setShowBranchList] = useState(false);
+  const { branchItemSelect, dataBranch, selectBranch } = useBranchesStore();
 
   const {
     register,
@@ -174,6 +178,23 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
             </section>
             <section className="section_two">
               <ContainerSelector>
+                <label>Categories: </label>
+                <Selector
+                  color="#1a58eb"
+                  textOne="🖥️ "
+                  textTwo={branchItemSelect?.name}
+                  funcion={() => setShowBranchList(!showBranchList)}
+                  state={showBranchList}
+                />
+                <DropDawnList
+                  data={dataBranch}
+                  top="4rem"
+                  state={showBranchList}
+                  setState={() => setShowBranchList(!showBranchList)}
+                  funcion={selectBranch}
+                />
+              </ContainerSelector>
+              <ContainerSelector>
                 <label>Control stock</label>
                 <SwitchOne
                   state={inentoryState}
@@ -183,8 +204,21 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
               {inentoryState && (
                 <ContainerStock>
                   <ContainerSelector>
-                    <label>branches:</label>
-                    <Selector color="#1a58eb" textOne="🖥️" />
+                    <label>Branches: </label>
+                    <Selector
+                      color="#1a58eb"
+                      textOne="🖥️ "
+                      textTwo={branchItemSelect?.name}
+                      funcion={() => setShowBranchList(!showBranchList)}
+                      state={showBranchList}
+                    />
+                    <DropDawnList
+                      data={dataBranch}
+                      top="4rem"
+                      state={showBranchList}
+                      setState={() => setShowBranchList(!showBranchList)}
+                      funcion={selectBranch}
+                    />
                   </ContainerSelector>
                   <article>
                     <InputText icono={<v.iconoflechaderecha />}>
