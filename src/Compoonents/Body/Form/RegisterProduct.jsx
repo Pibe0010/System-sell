@@ -10,19 +10,37 @@ import {
   Selector,
   useBranchesStore,
   DropDawnList,
+  useCategoriesStore,
+  CheckboxOne,
 } from "../../../index.js";
 import { useForm } from "react-hook-form";
 import { useCompanyStore } from "../../../Stores/CompanyStore.jsx";
 import { useMutation } from "@tanstack/react-query";
 import { Device } from "../../../Styles/BreakPionts.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const RegisterProduct = ({ onClose, dataSelect, action }) => {
-  const { insertProduct, updateProduct } = useProductsStore();
+  const [isCheckedOne, setIsCheckedOne] = useState(true);
+  const [isCheckedTwo, setIsCheckedTwo] = useState(false);
+  const { insertProduct, updateProduct, generatorCode, codeGenerator } =
+    useProductsStore();
   const { dataCompany } = useCompanyStore();
   const [inentoryState, setInentoryState] = useState(false);
   const [showBranchList, setShowBranchList] = useState(false);
+  const [showCategoriesList, setShowCategoriesList] = useState(false);
   const { branchItemSelect, dataBranch, selectBranch } = useBranchesStore();
+  const { dataCategories, categoriesItemSelect, selectCategories } =
+    useCategoriesStore();
+
+  const handlerCheckboxChange = (checkboxNumber) => {
+    if (checkboxNumber === 1) {
+      setIsCheckedOne(true);
+      setIsCheckedTwo(false);
+    } else {
+      setIsCheckedOne(false);
+      setIsCheckedTwo(true);
+    }
+  };
 
   const {
     register,
@@ -65,6 +83,15 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
       await insertProduct(params, file);
     }
   }
+
+  const automaticGeneratorCode = () => {
+    generatorCode();
+    dataSelect.bar_code = codeGenerator;
+  };
+
+  useEffect(() => {
+    if (action != "Update") automaticGeneratorCode();
+  }, []);
 
   return (
     <Container>
@@ -141,7 +168,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                   )}
                 </InputText>
               </article>
-              <article>
+              <article className="contentFatherGenerator">
                 <InputText icono={<v.iconoflechaderecha />}>
                   <input
                     className="form__field"
@@ -157,8 +184,11 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     <p>Required field</p>
                   )}
                 </InputText>
+                <ContainerBtn>
+                  <BtnOne titulo="Generate" funcion={automaticGeneratorCode} />
+                </ContainerBtn>
               </article>
-              <article>
+              <article className="contentFatherGenerator">
                 <InputText icono={<v.iconoflechaderecha />}>
                   <input
                     className="form__field"
@@ -174,24 +204,40 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     <p>Required field</p>
                   )}
                 </InputText>
+                <ContainerBtn>
+                  <BtnOne titulo="Generate" funcion={automaticGeneratorCode} />
+                </ContainerBtn>
               </article>
             </section>
             <section className="section_two">
+              <label>Sele for: </label>
+              <ContainerSelector>
+                <label>Unit: </label>
+                <CheckboxOne
+                  isChecked={isCheckedOne}
+                  onChange={() => handlerCheckboxChange(1)}
+                />
+                <label>Bulk(decimals): </label>
+                <CheckboxOne
+                  isChecked={isCheckedTwo}
+                  onChange={() => handlerCheckboxChange(2)}
+                />
+              </ContainerSelector>
               <ContainerSelector>
                 <label>Categories: </label>
                 <Selector
                   color="#1a58eb"
                   textOne="🖥️ "
-                  textTwo={branchItemSelect?.name}
-                  funcion={() => setShowBranchList(!showBranchList)}
-                  state={showBranchList}
+                  textTwo={categoriesItemSelect?.name}
+                  funcion={() => setShowCategoriesList(!showCategoriesList)}
+                  state={showCategoriesList}
                 />
                 <DropDawnList
-                  data={dataBranch}
+                  data={dataCategories}
                   top="4rem"
-                  state={showBranchList}
-                  setState={() => setShowBranchList(!showBranchList)}
-                  funcion={selectBranch}
+                  state={showCategoriesList}
+                  setState={() => setShowCategoriesList(!showCategoriesList)}
+                  funcion={selectCategories}
                 />
               </ContainerSelector>
               <ContainerSelector>
@@ -319,10 +365,14 @@ const Container = styled.div`
       @media ${Device.tablet} {
         grid-template-columns: repeat(2, 1fr);
       }
-      section {
+      .section_one,
+      .section_two {
         display: flex;
         gap: 20px;
         flex-direction: column;
+      }
+      .contentFatherGenerator {
+        position: relative;
       }
     }
   }
@@ -334,4 +384,10 @@ const ContainerStock = styled.div`
   border: 1px solid rgba(11, 178, 249, 0.9);
   border-radius: 15px;
   padding: 12px;
+`;
+
+const ContainerBtn = styled.div`
+  position: absolute;
+  right: 0;
+  top: 22%;
 `;

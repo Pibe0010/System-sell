@@ -2,6 +2,7 @@ import { create } from "zustand";
 import {
   AddProduct,
   DeleteProduct,
+  GeneratorCode,
   InsertProduct,
   SearchProduct,
   UpdateProduct,
@@ -52,5 +53,11 @@ export const useProductsStore = create((set, get) => ({
     const response = await SearchProduct(params);
     set({ dataProduct: response });
     return response;
+  },
+
+  codeGenerator: 0,
+  generatorCode: () => {
+    const response = GeneratorCode({ id: 2 });
+    set({ codeGenerator: response });
   },
 }));
