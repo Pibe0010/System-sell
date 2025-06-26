@@ -12,6 +12,7 @@ import {
   DropDawnList,
   useCategoriesStore,
   CheckboxOne,
+  BtnTwo,
 } from "../../../index.js";
 import { useForm } from "react-hook-form";
 import { useCompanyStore } from "../../../Stores/CompanyStore.jsx";
@@ -22,23 +23,28 @@ import { useState, useEffect } from "react";
 export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const [isCheckedOne, setIsCheckedOne] = useState(true);
   const [isCheckedTwo, setIsCheckedTwo] = useState(false);
-  const { insertProduct, updateProduct, generatorCode, codeGenerator } =
-    useProductsStore();
-  const { dataCompany } = useCompanyStore();
+  const [saleFor, setSaleFor] = useState("Unit");
+
   const [inentoryState, setInentoryState] = useState(false);
   const [showBranchList, setShowBranchList] = useState(false);
   const [showCategoriesList, setShowCategoriesList] = useState(false);
+
+  const { dataCompany } = useCompanyStore();
   const { branchItemSelect, dataBranch, selectBranch } = useBranchesStore();
   const { dataCategories, categoriesItemSelect, selectCategories } =
     useCategoriesStore();
+  const { insertProduct, updateProduct, generatorCode, codeGenerator } =
+    useProductsStore();
 
   const handlerCheckboxChange = (checkboxNumber) => {
     if (checkboxNumber === 1) {
       setIsCheckedOne(true);
       setIsCheckedTwo(false);
+      setSaleFor("Unit");
     } else {
       setIsCheckedOne(false);
       setIsCheckedTwo(true);
+      setSaleFor("Bulk");
     }
   };
 
@@ -64,6 +70,8 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   };
 
   async function insert(data) {
+    handlerValidateData(data);
+
     if (action === "Update") {
       const params = {
         _name: Transformation(data.description),
@@ -71,26 +79,52 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
         _color: currentColor,
         _id: dataSelect.id,
       };
-      await updateProduct(params, dataSelect.icon, file);
+      await updateProduct(params, dataSelect.icon);
     } else {
       const params = {
-        _name: Transformation(data.description),
-        _color: currentColor,
-        _icon: "-",
+        _name: data.name,
+        _price_sele: parseFloat(data.price_sele).toFixed(2),
+        _price_buys: paerseFloat(data.price_buys).toFixed(2),
+        _id_categorys: categoriesItemSelect.id,
+        _bar_code: data.bar_code,
+        _bar_code_internal: data.bar_code_internal,
         _id_company: dataCompany.id,
+        _sold_by: saleFor,
+        _manage_inventory: inentoryState,
+        _manage_multi_prices: false,
       };
 
-      await insertProduct(params, file);
+      await insertProduct(params);
     }
   }
 
-  const automaticGeneratorCode = () => {
+  const handlerValidateData = (data) => {
+    if (data.bar_code_internal.trim() === "") {
+      automaticGeneratorCodeInternal();
+      data.bar_code_internal = dataSelect.bar_code_internal;
+    }
+
+    if (data.bar_code.trim() === "") {
+      automaticGeneratorBarCode();
+      data.bar_code = dataSelect.bar_code;
+    }
+
+    if (data.price_sele.trim() === "") data.price_sele = 0;
+    if (data.price_buys.trim() === "") data.price_buys = 0;
+  };
+
+  const automaticGeneratorCodeInternal = () => {
+    generatorCode();
+    dataSelect.bar_code_internal = codeGenerator;
+  };
+
+  const automaticGeneratorBarCode = () => {
     generatorCode();
     dataSelect.bar_code = codeGenerator;
   };
 
   useEffect(() => {
-    if (action != "Update") automaticGeneratorCode();
+    if (action != "Update") automaticGeneratorCodeInternal();
   }, []);
 
   return (
@@ -127,9 +161,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     })}
                   />
                   <label className="form__label">name</label>
-                  {errors.description?.type === "required" && (
-                    <p>Required field</p>
-                  )}
+                  {errors.name?.type === "required" && <p>Required field</p>}
                 </InputText>
               </article>
               <article>
@@ -140,14 +172,9 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     type="number"
                     step="0.01"
                     placeholder="price-sale"
-                    {...register("price_sale", {
-                      required: true,
-                    })}
+                    {...register("price_sale", {})}
                   />
                   <label className="form__label">price-sale</label>
-                  {errors.description?.type === "required" && (
-                    <p>Required field</p>
-                  )}
                 </InputText>
               </article>
               <article>
@@ -158,14 +185,9 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     type="number"
                     step="0.01"
                     placeholder="price-buys"
-                    {...register("price_buys", {
-                      required: true,
-                    })}
+                    {...register("price_buys", {})}
                   />
                   <label className="form__label">price-buys</label>
-                  {errors.description?.type === "required" && (
-                    <p>Required field</p>
-                  )}
                 </InputText>
               </article>
               <article className="contentFatherGenerator">
@@ -175,17 +197,15 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     defaultValue={dataSelect.bar_code}
                     type="text"
                     placeholder="bar-code"
-                    {...register("bar_code", {
-                      required: true,
-                    })}
+                    {...register("bar_code", {})}
                   />
                   <label className="form__label">bar-code</label>
-                  {errors.description?.type === "required" && (
-                    <p>Required field</p>
-                  )}
                 </InputText>
                 <ContainerBtn>
-                  <BtnOne titulo="Generate" funcion={automaticGeneratorCode} />
+                  <BtnTwo
+                    titulo="Generate"
+                    funcion={automaticGeneratorBarCode}
+                  />
                 </ContainerBtn>
               </article>
               <article className="contentFatherGenerator">
@@ -195,17 +215,15 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     defaultValue={dataSelect.bar_code_internal}
                     type="text"
                     placeholder="bar-code-int"
-                    {...register("bar_code_internal", {
-                      required: true,
-                    })}
+                    {...register("bar_code_internal", {})}
                   />
                   <label className="form__label">bar-code-int</label>
-                  {errors.description?.type === "required" && (
-                    <p>Required field</p>
-                  )}
                 </InputText>
                 <ContainerBtn>
-                  <BtnOne titulo="Generate" funcion={automaticGeneratorCode} />
+                  <BtnTwo
+                    titulo="Generate"
+                    funcion={automaticGeneratorCodeInternal}
+                  />
                 </ContainerBtn>
               </article>
             </section>
@@ -274,14 +292,9 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                         type="number"
                         step="0.01"
                         placeholder="stock"
-                        {...register("tock", {
-                          required: true,
-                        })}
+                        {...register("tock", {})}
                       />
                       <label className="form__label">stock</label>
-                      {errors.description?.type === "required" && (
-                        <p>Required field</p>
-                      )}
                     </InputText>
                   </article>
                   <article>
@@ -292,14 +305,9 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                         type="number"
                         step="0.01"
                         placeholder="min-stock"
-                        {...register("min_stock", {
-                          required: true,
-                        })}
+                        {...register("min_stock", {})}
                       />
                       <label className="form__label">min-stock</label>
-                      {errors.description?.type === "required" && (
-                        <p>Required field</p>
-                      )}
                     </InputText>
                   </article>
                 </ContainerStock>
@@ -389,5 +397,5 @@ const ContainerStock = styled.div`
 const ContainerBtn = styled.div`
   position: absolute;
   right: 0;
-  top: 22%;
+  top: 10%;
 `;
