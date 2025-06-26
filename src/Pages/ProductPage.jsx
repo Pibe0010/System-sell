@@ -3,6 +3,7 @@ import {
   ProductTemplate,
   Spinner_one,
   useBranchesStore,
+  useCategoriesStore,
   useCompanyStore,
   useProductsStore,
 } from "../index.js";
@@ -11,6 +12,7 @@ export const ProductPage = () => {
   const { addProduct, searchProduct, search } = useProductsStore();
   const { dataCompany } = useCompanyStore();
   const { addBranches } = useBranchesStore();
+  const { addCategories } = useCategoriesStore();
 
   const { isLoading, error } = useQuery({
     queryKey: ["add product", dataCompany?.id],
@@ -30,6 +32,13 @@ export const ProductPage = () => {
   const {} = useQuery({
     queryKey: ["add branch", dataCompany?.id],
     queryFn: () => addBranches({ id_company: dataCompany?.id }),
+    enabled: !!dataCompany,
+    refetchOnWindowFocus: false,
+  });
+
+  const {} = useQuery({
+    queryKey: ["add cetegories", dataCompany?.id],
+    queryFn: () => addCategories({ id_company: dataCompany?.id }),
     enabled: !!dataCompany,
     refetchOnWindowFocus: false,
   });
