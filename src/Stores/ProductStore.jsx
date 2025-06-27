@@ -28,8 +28,8 @@ export const useProductsStore = create((set, get) => ({
     set({ ProductItemSelect: params });
   },
 
-  insertProduct: async (params, file) => {
-    await InsertProduct(params, file);
+  insertProduct: async (params) => {
+    await InsertProduct(params);
     const { addProduct } = get();
     const { insertParams } = get();
     set(addProduct(insertParams));
@@ -42,8 +42,8 @@ export const useProductsStore = create((set, get) => ({
     set(addProduct(insertParams));
   },
 
-  updateProduct: async (params, fileOld, fileNew) => {
-    await UpdateProduct(params, fileOld, fileNew);
+  updateProduct: async (params) => {
+    await UpdateProduct(params);
     const { addProduct } = get();
     const { insertParams } = get();
     set(addProduct(insertParams));
