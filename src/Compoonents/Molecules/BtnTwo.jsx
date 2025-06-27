@@ -32,7 +32,7 @@ export function BtnTwo({
     </Container>
   );
 }
-const Container = styled.span`
+const Container = styled.div`
   font-weight: 700;
   display: flex;
   font-size: 15px;
