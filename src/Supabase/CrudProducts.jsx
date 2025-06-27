@@ -13,6 +13,8 @@ export const InsertProduct = async (params) => {
     });
     return;
   }
+
+  return data;
 };
 
 export const AddProduct = async (params) => {

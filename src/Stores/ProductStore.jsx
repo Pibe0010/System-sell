@@ -29,10 +29,11 @@ export const useProductsStore = create((set, get) => ({
   },
 
   insertProduct: async (params) => {
-    await InsertProduct(params);
+    const response = await InsertProduct(params);
     const { addProduct } = get();
     const { insertParams } = get();
     set(addProduct(insertParams));
+    return response;
   },
 
   deleteProduct: async (params) => {

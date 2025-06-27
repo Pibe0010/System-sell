@@ -14,6 +14,7 @@ import {
   CheckboxOne,
   BtnTwo,
   useCompanyStore,
+  useStoragesStore,
 } from "../../../index.js";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -22,6 +23,7 @@ import { useState, useEffect } from "react";
 
 export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const { dataCompany } = useCompanyStore();
+  const { insertStorage } = useStoragesStore();
   const { branchItemSelect, dataBranch, selectBranch } = useBranchesStore();
   const { dataCategories, categoriesItemSelect, selectCategories } =
     useCategoriesStore();
@@ -70,7 +72,6 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   };
 
   async function insert(data) {
-    console.log("data insert", data);
     handlerValidateData(data);
 
     if (action === "Update") {
@@ -94,9 +95,18 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
         _manage_inventory: inentoryState,
         _manage_multi_prices: false,
       };
-      console.log(params);
 
-      await insertProduct(params);
+      const newIdProduct = await insertProduct(params);
+
+      if (setInentoryState) {
+        const paramsStorages = {
+          id_branches: branchItemSelect.id,
+          id_product: newIdProduct,
+          stock: parseFloat(data.stock),
+          min_stock: parseFloat(data.min_stock),
+        };
+        await insertStorage(paramsStorages);
+      }
     }
   }
 
@@ -112,6 +122,11 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
     }
     if (data.price_sele.trim() === "") data.price_sele = 0;
     if (data.price_buys.trim() === "") data.price_buys = 0;
+
+    if (inentoryState) {
+      if (data.stock.trim() === "") data.stock = 0;
+      if (data.min_stock.trim() === "") data.min_stock = 0;
+    }
   };
 
   const automaticGeneratorCodeInternal = () => {
