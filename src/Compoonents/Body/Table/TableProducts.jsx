@@ -149,7 +149,7 @@ export const TableProducts = ({
     },
   ];
   const table = useReactTable({
-    data: datas,
+    data,
     columns,
     state: {
       columnFilters,

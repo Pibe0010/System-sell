@@ -184,7 +184,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                 <InputText icono={<v.iconoflechaderecha />}>
                   <input
                     className="form__field"
-                    defaultValue={dataSelect.price_selee}
+                    defaultValue={dataSelect.price_sele}
                     type="number"
                     step="0.01"
                     placeholder="price-sele"

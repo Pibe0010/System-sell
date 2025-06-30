@@ -25,11 +25,10 @@ export const AddProduct = async (params) => {
 };
 
 export const SearchProduct = async (params) => {
-  const { data } = await supabase
-    .from(table)
-    .select()
-    .eq("id_company", params.id_company)
-    .ilike("name", "%" + params.description + "%");
+  const { data } = await supabase.rpc("search_product", {
+    _id_company: params.id_company,
+    search: params.search,
+  });
 
   return data;
 };
