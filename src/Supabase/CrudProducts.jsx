@@ -18,12 +18,9 @@ export const InsertProduct = async (params) => {
 };
 
 export const AddProduct = async (params) => {
-  const { data } = await supabase
-    .from(table)
-    .select()
-    .eq("id_company", params.id_company)
-    .order("id", { ascending: false });
-
+  const { data } = await supabase.rpc("add_product", {
+    _id_company: params.id_company,
+  });
   return data;
 };
 

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  CheckboxOne,
   ContentActionsTable,
   Pagination,
   useProductsStore,
@@ -71,7 +72,56 @@ export const TableProducts = ({
     {
       accessorKey: "name",
       header: "Name",
-      cell: (info) => <span>{info.getValue()}</span>,
+      cell: (info) => info.getValue(),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "p_sale",
+      header: "P.sale",
+      cell: (info) => info.getValue(),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "p_buys",
+      header: "P.buys",
+      cell: (info) => info.getValue(),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "sold_by",
+      header: "Sold-by",
+      cell: (info) => info.getValue(),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "manage_inventory",
+      header: "inventory",
+      enableSorting: false,
+      cell: (info) => (
+        <div className="checkboxTable">
+          <CheckboxOne isChecked={info.getValue()} />
+        </div>
+      ),
       enableColumnFilter: true,
       filterFn: (row, columnId, filterStatuses) => {
         if (filterStatuses.length === 0) return true;
@@ -82,15 +132,13 @@ export const TableProducts = ({
 
     {
       accessorKey: "Actions",
-      header: "",
+      header: "Actions",
       enableSorting: false,
       cell: (info) => (
-        <span data-title="Actions" className="ContentCell">
-          <ContentActionsTable
-            handlerUpdate={() => update(info.row.original)}
-            handlerDelete={() => deleter(info.row.original)}
-          />
-        </span>
+        <ContentActionsTable
+          handlerUpdate={() => update(info.row.original)}
+          handlerDelete={() => deleter(info.row.original)}
+        />
       ),
       enableColumnFilter: true,
       filterFn: (row, columnId, filterStatuses) => {
@@ -101,7 +149,7 @@ export const TableProducts = ({
     },
   ];
   const table = useReactTable({
-    data,
+    data: datas,
     columns,
     state: {
       columnFilters,
@@ -165,7 +213,11 @@ export const TableProducts = ({
             {table.getRowModel().rows.map((item) => (
               <tr key={item.id}>
                 {item.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td
+                    key={cell.id}
+                    data-title={cell.column.columnDef.header}
+                    className="ContentCell"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -293,8 +345,6 @@ const Container = styled.div`
         }
       }
       .ContentCell {
-        text-align: right;
-        display: flex;
         justify-content: space-between;
         align-items: center;
         height: 50px;
@@ -305,6 +355,18 @@ const Container = styled.div`
           border-bottom: none;
         }
       }
+      .checkboxTable {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+
+        @media (min-width: ${v.bpbart}) {
+          justify-content: center;
+          border-bottom: none;
+        }
+      }
+
       td {
         text-align: right;
         @media (min-width: ${v.bpbart}) {
