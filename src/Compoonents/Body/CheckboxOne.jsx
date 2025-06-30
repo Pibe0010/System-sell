@@ -7,7 +7,7 @@ export function CheckboxOne({ isChecked, onChange }) {
         <input
           id="checkbox"
           type="checkbox"
-          defaultChecked={isChecked}
+          checked={isChecked}
           onChange={onChange}
         />
         <span className="checkmark"></span>

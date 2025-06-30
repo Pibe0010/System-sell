@@ -24,7 +24,7 @@ export const ProductPage = () => {
   const {} = useQuery({
     queryKey: ["search product", search],
     queryFn: () =>
-      searchProduct({ id_company: dataCompany?.id, description: search }),
+      searchProduct({ id_company: dataCompany?.id, search: search }),
     enabled: !!dataCompany,
     refetchOnWindowFocus: false,
   });
