@@ -12,7 +12,7 @@ export function DropDawnList({
 }) {
   if (!state) return;
   function seleccionar(params) {
-    refetch();
+    if (refetch) refetch();
     funcion(params);
     setState();
   }

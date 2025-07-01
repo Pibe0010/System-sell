@@ -23,15 +23,6 @@ export const AddStockFromStorage = async (params) => {
     .eq("id_product", params.id_product)
     .maybeSingle();
 
-  if (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: error.message,
-    });
-    return;
-  }
-
   return data;
 };
 

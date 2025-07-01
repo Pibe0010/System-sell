@@ -46,8 +46,8 @@ export const DeleteProduct = async (params) => {
   }
 };
 
-export const UpdateProduct = async (params, fileOld, fileNew) => {
-  const { error } = await supabase.rpc("update_categories", params);
+export const UpdateProduct = async (params) => {
+  const { error } = await supabase.rpc("update_product", params);
 
   if (error) {
     Swal.fire({

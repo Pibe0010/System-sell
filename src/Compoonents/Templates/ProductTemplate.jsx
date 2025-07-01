@@ -11,7 +11,7 @@ import { v } from "../../Styles/variables.jsx";
 import { useState } from "react";
 
 export const ProductTemplate = () => {
-  const { dataProduct, setSearch } = useProductsStore();
+  const { dataProduct, setSearch, codeGenerator } = useProductsStore();
   const [openRegister, setOpenRegister] = useState(false);
   const [action, setAction] = useState("");
   const [dataSelect, setDataSelect] = useState({});
@@ -20,6 +20,7 @@ export const ProductTemplate = () => {
     setOpenRegister(!openRegister);
     setAction("new");
     setDataSelect([]);
+    codeGenerator();
   };
 
   return (
