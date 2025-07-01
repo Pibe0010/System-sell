@@ -14,9 +14,11 @@ export const ProductPage = () => {
   const { addBranches } = useBranchesStore();
   const { addCategories } = useCategoriesStore();
 
-  const { isLoading, error } = useQuery({
+  const { isLoading, error, refetch } = useQuery({
     queryKey: ["add product", dataCompany?.id],
-    queryFn: () => addProduct({ id_company: dataCompany?.id }),
+    queryFn: () =>
+      addProduct({ id_company: dataCompany?.id, refetchs: refetch }),
+
     enabled: !!dataCompany,
     refetchOnWindowFocus: false,
   });

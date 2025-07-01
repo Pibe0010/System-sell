@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { AddStockFromStorage, InsertStorage } from "../index.js";
+import { AddStockFromStorage, DeleteStorage, InsertStorage } from "../index.js";
 
 export const useStoragesStore = create((set) => ({
   dataStorages: [],
@@ -10,5 +10,8 @@ export const useStoragesStore = create((set) => ({
   },
   insertStorage: async (params) => {
     await InsertStorage(params);
+  },
+  deleteStorage: async (params) => {
+    await DeleteStorage(params);
   },
 }));

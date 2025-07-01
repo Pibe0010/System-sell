@@ -9,6 +9,7 @@ import {
 } from "../index.js";
 
 export const useProductsStore = create((set, get) => ({
+  refetchs: null,
   search: "",
   setSearch: (params) => {
     set({ search: params });
@@ -21,6 +22,7 @@ export const useProductsStore = create((set, get) => ({
     set({ insertParams: params });
     set({ dataProduct: response });
     set({ ProductItemSelect: response[0] });
+    set({ refetchs: params.refetchs });
     return response;
   },
 
