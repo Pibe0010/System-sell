@@ -24,12 +24,18 @@ import Swal from "sweetalert2";
 
 export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const { dataCompany } = useCompanyStore();
-  const { insertStorage, addStorages, dataStorages } = useStoragesStore();
+  const { insertStorage, addStorages, dataStorages, deleteStorage } =
+    useStoragesStore();
   const { branchItemSelect, dataBranch, selectBranch } = useBranchesStore();
   const { dataCategories, categoriesItemSelect, selectCategories } =
     useCategoriesStore();
-  const { insertProduct, updateProduct, generatorCode, codeGenerator } =
-    useProductsStore();
+  const {
+    insertProduct,
+    updateProduct,
+    generatorCode,
+    codeGenerator,
+    refetchs,
+  } = useProductsStore();
 
   const [isCheckedOne, setIsCheckedOne] = useState(true);
   const [isCheckedTwo, setIsCheckedTwo] = useState(false);
@@ -168,19 +174,32 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   }, []);
 
   const hamdlerCheckInventory = () => {
-    Swal.fire({
-      title: "¿You're sure.?",
-      text: "Deactivate inventory, it will delete all the stocks",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
+    if (action === "Update") {
+      if (dataStorages) {
+        if (inentoryState) {
+          Swal.fire({
+            title: "¿You're sure.?",
+            text: "Deactivate inventory, it will delete all the stocks",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              setInentoryState(false);
+              await deleteStorage({ id: dataStorages.id });
+            }
+          });
+        } else {
+          setInentoryState(true);
+        }
+      } else {
         setInentoryState(!inentoryState);
       }
-    });
+    } else {
+      setInentoryState(!inentoryState);
+    }
   };
 
   return (
@@ -199,7 +218,13 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
             </section>
 
             <section>
-              <span onClick={onClose}>X</span>
+              <span
+                onClick={() => {
+                  refetchs(), onClose();
+                }}
+              >
+                X
+              </span>
             </section>
           </div>
 

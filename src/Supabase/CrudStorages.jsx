@@ -34,3 +34,16 @@ export const AddStockFromStorage = async (params) => {
 
   return data;
 };
+
+export const DeleteStorage = async (params) => {
+  const { error } = await supabase.from(table).delete().eq("id", params.id);
+
+  if (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.message,
+    });
+    return;
+  }
+};
