@@ -17,13 +17,14 @@ import {
   useStoragesStore,
 } from "../../../index.js";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Device } from "../../../Styles/BreakPionts.jsx";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const { dataCompany } = useCompanyStore();
-  const { insertStorage } = useStoragesStore();
+  const { insertStorage, addStorages, dataStorages } = useStoragesStore();
   const { branchItemSelect, dataBranch, selectBranch } = useBranchesStore();
   const { dataCategories, categoriesItemSelect, selectCategories } =
     useCategoriesStore();
@@ -37,6 +38,19 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const [inentoryState, setInentoryState] = useState(false);
   const [showBranchList, setShowBranchList] = useState(false);
   const [showCategoriesList, setShowCategoriesList] = useState(false);
+
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: [
+      "add stock in storages",
+      { id_product: dataSelect.id, id_branches: branchItemSelect.id },
+    ],
+    queryFn: () =>
+      addStorages({
+        id_branches: branchItemSelect.id,
+        id_product: dataSelect.id,
+      }),
+    enabled: inentoryState,
+  });
 
   const handlerCheckboxChange = (checkboxNumber) => {
     if (checkboxNumber === 1) {
@@ -140,8 +154,34 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   };
 
   useEffect(() => {
-    if (action != "Update") automaticGeneratorCodeInternal();
+    if (action != "Update") {
+      automaticGeneratorCodeInternal();
+    } else {
+      dataSelect.sold_by === "Unit"
+        ? handlerCheckboxChange(1)
+        : handlerCheckboxChange(0);
+
+      dataSelect.manage_inventory
+        ? setInentoryState(true)
+        : setInentoryState(false);
+    }
   }, []);
+
+  const hamdlerCheckInventory = () => {
+    Swal.fire({
+      title: "¿You're sure.?",
+      text: "Deactivate inventory, it will delete all the stocks",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setInentoryState(!inentoryState);
+      }
+    });
+  };
 
   return (
     <Container>
@@ -278,7 +318,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                 <label>Control stock</label>
                 <SwitchOne
                   state={inentoryState}
-                  setState={() => setInentoryState(!inentoryState)}
+                  setState={hamdlerCheckInventory}
                 />
               </ContainerSelector>
               {inentoryState && (
@@ -293,6 +333,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                       state={showBranchList}
                     />
                     <DropDawnList
+                      refetch={refetch}
                       data={dataBranch}
                       top="4rem"
                       state={showBranchList}
@@ -304,7 +345,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     <InputText icono={<v.iconoflechaderecha />}>
                       <input
                         className="form__field"
-                        defaultValue={dataSelect.stock}
+                        defaultValue={dataStorages?.stock}
                         type="number"
                         step="0.01"
                         placeholder="stock"
@@ -317,7 +358,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                     <InputText icono={<v.iconoflechaderecha />}>
                       <input
                         className="form__field"
-                        defaultValue={dataSelect.min_stock}
+                        defaultValue={dataStorages?.min_stock}
                         type="number"
                         step="0.01"
                         placeholder="min-stock"
