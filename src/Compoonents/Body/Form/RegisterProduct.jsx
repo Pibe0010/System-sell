@@ -44,6 +44,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const [inentoryState, setInentoryState] = useState(false);
   const [showBranchList, setShowBranchList] = useState(false);
   const [showCategoriesList, setShowCategoriesList] = useState(false);
+  const [enabledStockState, setEnableStockState] = useState(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: [
@@ -96,12 +97,30 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
 
     if (action === "Update") {
       const params = {
-        _name: Transformation(data.description),
-        _id_company: dataCompany.id,
-        _color: currentColor,
         _id: dataSelect.id,
+        _name: data.name,
+        _price_sele: parseFloat(data.price_sele),
+        _price_buys: parseFloat(data.price_buys),
+        _id_categorys: categoriesItemSelect.id,
+        _bar_code: data.bar_code,
+        _bar_code_internal: data.bar_code_internal,
+        _id_company: dataCompany.id,
+        _sold_by: saleFor,
+        _manage_inventory: inentoryState,
       };
-      await updateProduct(params, dataSelect.icon);
+      await updateProduct(params);
+
+      if (setInentoryState) {
+        if (dataStorages == null) {
+          const paramsStorages = {
+            id_branches: branchItemSelect.id,
+            id_product: dataSelect.id,
+            stock: parseFloat(data.stock),
+            min_stock: parseFloat(data.min_stock),
+          };
+          await insertStorage(paramsStorages);
+        }
+      }
     } else {
       const params = {
         _name: data.name,
@@ -170,6 +189,10 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
       dataSelect.manage_inventory
         ? setInentoryState(true)
         : setInentoryState(false);
+
+      dataSelect.manage_inventory
+        ? setEnableStockState(true)
+        : setEnableStockState(false);
     }
   }, []);
 
@@ -366,9 +389,18 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                       funcion={selectBranch}
                     />
                   </ContainerSelector>
+                  {enabledStockState && (
+                    <ContainerMesageStock>
+                      <span>
+                        To modify the stock, do so from the KARDEX module.
+                      </span>
+                    </ContainerMesageStock>
+                  )}
+
                   <article>
                     <InputText icono={<v.iconoflechaderecha />}>
                       <input
+                        disabled={enabledStockState}
                         className="form__field"
                         defaultValue={dataStorages?.stock}
                         type="number"
@@ -382,6 +414,7 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                   <article>
                     <InputText icono={<v.iconoflechaderecha />}>
                       <input
+                        disabled={enabledStockState}
                         className="form__field"
                         defaultValue={dataStorages?.min_stock}
                         type="number"
@@ -430,6 +463,8 @@ const Container = styled.div`
     box-shadow: -10px 15px 30px rgba(10, 9, 9, 0.4);
     padding: 13px 36px 20px 36px;
     z-index: 100;
+    height: calc(100vh - 20px);
+    overflow-y: auto;
 
     .headers {
       display: flex;
@@ -480,4 +515,12 @@ const ContainerBtn = styled.div`
   position: absolute;
   right: 0;
   top: 10%;
+`;
+const ContainerMesageStock = styled.div`
+  text-align: center;
+  color: rgb(255, 1, 1);
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px;
 `;
