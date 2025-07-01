@@ -1,9 +1,18 @@
 import styled from "styled-components";
 import { Device } from "../../Styles/BreakPionts.jsx";
 
-export function DropDawnList({ data, setState, funcion, scroll, top, state }) {
+export function DropDawnList({
+  data,
+  setState,
+  funcion,
+  scroll,
+  top,
+  state,
+  refetch,
+}) {
   if (!state) return;
   function seleccionar(params) {
+    refetch();
     funcion(params);
     setState();
   }

@@ -8,7 +8,7 @@ export const SwitchOne = ({ state, setState }) => {
           id="check-apple"
           type="checkbox"
           onClick={setState}
-          readOnly={state}
+          checked={state}
         />
         <label htmlFor="check-apple"></label>
       </div>
