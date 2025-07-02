@@ -3,7 +3,6 @@ import { v } from "../../../Styles/variables.jsx";
 import {
   InputText,
   BtnOne,
-  Transformation,
   useProductsStore,
   ContainerSelector,
   SwitchOne,
@@ -45,6 +44,8 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   const [showBranchList, setShowBranchList] = useState(false);
   const [showCategoriesList, setShowCategoriesList] = useState(false);
   const [enabledStockState, setEnableStockState] = useState(false);
+  const [randomBarCode, setRandomBarCode] = useState("");
+  const [randomBarCodeInternal, setRandomBarCodeInternal] = useState("");
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: [
@@ -102,8 +103,10 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
         _price_sele: parseFloat(data.price_sele),
         _price_buys: parseFloat(data.price_buys),
         _id_categorys: categoriesItemSelect.id,
-        _bar_code: data.bar_code,
-        _bar_code_internal: data.bar_code_internal,
+        _bar_code: randomBarCode ? randomBarCode : codeGenerator,
+        _bar_code_internal: randomBarCodeInternal
+          ? randomBarCodeInternal
+          : codeGenerator,
         _id_company: dataCompany.id,
         _sold_by: saleFor,
         _manage_inventory: inentoryState,
@@ -127,8 +130,10 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
         _price_sele: parseFloat(data.price_sele),
         _price_buys: parseFloat(data.price_buys),
         _id_categorys: categoriesItemSelect.id,
-        _bar_code: data.bar_code,
-        _bar_code_internal: data.bar_code_internal,
+        _bar_code: randomBarCode ? randomBarCode : codeGenerator,
+        _bar_code_internal: randomBarCodeInternal
+          ? randomBarCodeInternal
+          : codeGenerator,
         _id_company: dataCompany.id,
         _sold_by: saleFor,
         _manage_inventory: inentoryState,
@@ -150,38 +155,50 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
   }
 
   const handlerValidateData = (data) => {
-    if (data.bar_code_internal.trim() === "") {
+    if (!randomBarCodeInternal) {
       automaticGeneratorCodeInternal();
-      data.bar_code_internal = dataSelect.bar_code_internal;
     }
 
-    if (data.bar_code.trim() === "") {
+    if (!randomBarCode) {
       automaticGeneratorBarCode();
-      data.bar_code = dataSelect.bar_code;
     }
+
     if (data.price_sele.trim() === "") data.price_sele = 0;
     if (data.price_buys.trim() === "") data.price_buys = 0;
 
     if (inentoryState) {
-      if (data.stock.trim() === "") data.stock = 0;
-      if (data.min_stock.trim() === "") data.min_stock = 0;
+      if (!dataStorages) {
+        if (data.stock.trim() === "") data.stock = 0;
+        if (data.min_stock.trim() === "") data.min_stock = 0;
+      }
     }
   };
 
   const automaticGeneratorCodeInternal = () => {
     generatorCode();
+    setRandomBarCodeInternal(codeGenerator);
     dataSelect.bar_code_internal = codeGenerator;
   };
 
   const automaticGeneratorBarCode = () => {
     generatorCode();
+    setRandomBarCode(codeGenerator);
     dataSelect.bar_code = codeGenerator;
+  };
+
+  const handlerChangeBarCode = (e) => {
+    setRandomBarCode(e.target.value);
+  };
+  const handlerChangeBarCodeInternal = (e) => {
+    setRandomBarCodeInternal(e.target.value);
   };
 
   useEffect(() => {
     if (action != "Update") {
       automaticGeneratorCodeInternal();
     } else {
+      setRandomBarCodeInternal(dataSelect.bar_code_internal);
+      setRandomBarCode(dataSelect.bar_code);
       dataSelect.sold_by === "Unit"
         ? handlerCheckboxChange(1)
         : handlerCheckboxChange(0);
@@ -298,10 +315,11 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                 <InputText icono={<v.iconoflechaderecha />}>
                   <input
                     className="form__field"
-                    defaultValue={dataSelect.bar_code}
+                    value={randomBarCode}
+                    onChange={handlerChangeBarCode}
                     type="text"
                     placeholder="bar-code"
-                    {...register("bar_code")}
+                    /* {...register("bar_code")} */
                   />
                   <label className="form__label">bar-code</label>
                 </InputText>
@@ -316,10 +334,11 @@ export const RegisterProduct = ({ onClose, dataSelect, action }) => {
                 <InputText icono={<v.iconoflechaderecha />}>
                   <input
                     className="form__field"
-                    defaultValue={dataSelect.bar_code_internal}
+                    value={randomBarCodeInternal}
+                    onChange={handlerChangeBarCodeInternal}
                     type="text"
                     placeholder="bar-code-int"
-                    {...register("bar_code_internal")}
+                    /* {...register("bar_code_internal")} */
                   />
                   <label className="form__label">bar-code-int</label>
                 </InputText>
