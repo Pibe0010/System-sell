@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import {
+  AfterSalesPage,
   CategorysPage,
   HomePage,
   LoginPage,
@@ -40,6 +41,7 @@ export const MyRoutes = () => {
         <Route path="/settings" element={<SettignsPage />} />
         <Route path="/settings/categories" element={<CategorysPage />} />
         <Route path="/settings/products" element={<ProductPage />} />
+        <Route path="/after-sales" element={<AfterSalesPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>

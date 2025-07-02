@@ -29,7 +29,7 @@ export const LinksArray = [
   {
     label: "Sell",
     icon: "flat-color-icons:shop",
-    to: "/pos",
+    to: "/after-sales",
   },
   {
     label: "Kardex",
