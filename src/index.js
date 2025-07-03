@@ -66,3 +66,7 @@ export * from "./Supabase/CrudStorages.jsx";
 export * from "./Stores/StoragesStore.jsx";
 export * from "./Pages/AfterSalesPage.jsx";
 export * from "./Compoonents/Templates/AfterSalesTemplate.jsx";
+export * from "./Compoonents/Body/Clock.jsx";
+export * from "./Compoonents/Body/AfterSales/HeaderSales.jsx";
+export * from "./Compoonents/Body/AfterSales/AreaSalesDetail.jsx";
+export * from "./Compoonents/Body/AfterSales/AreaKeyboardSales.jsx";
