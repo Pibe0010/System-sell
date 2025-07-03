@@ -3,6 +3,7 @@ import { Device } from "../../Styles/BreakPionts";
 import {
   AreaKeyboardSales,
   AreaSalesDetail,
+  FooterSales,
   HeaderSales,
 } from "../../index.js";
 
@@ -14,7 +15,7 @@ export const AfterSalesTemplate = () => {
         <AreaSalesDetail />
         <AreaKeyboardSales />
       </Main>
-      <Footer></Footer>
+      <FooterSales />
     </Container>
   );
 };
@@ -36,13 +37,4 @@ const Container = styled.div`
 const Main = styled.div`
   grid-area: main;
   background-color: rgba(13, 0, 255, 0.5);
-`;
-
-const Footer = styled.div`
-  grid-area: footer;
-  background-color: rgba(137, 5, 252, 0.5);
-  display: none;
-  @media ${Device.desktop} {
-    display: flex;
-  }
 `;

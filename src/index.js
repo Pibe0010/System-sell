@@ -70,3 +70,5 @@ export * from "./Compoonents/Body/Clock.jsx";
 export * from "./Compoonents/Body/AfterSales/HeaderSales.jsx";
 export * from "./Compoonents/Body/AfterSales/AreaSalesDetail.jsx";
 export * from "./Compoonents/Body/AfterSales/AreaKeyboardSales.jsx";
+export * from "./Compoonents/Body/AfterSales/TotalSales.jsx";
+export * from "./Compoonents/Body/AfterSales/FooterSales.jsx";
