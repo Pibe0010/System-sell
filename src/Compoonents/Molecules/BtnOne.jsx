@@ -9,6 +9,9 @@ export function BtnOne({
   color,
   disabled,
   width,
+  border,
+  height,
+  decoration,
 }) {
   return (
     <Container
@@ -18,6 +21,9 @@ export function BtnOne({
       type="submit"
       $bgcolor={bgcolor}
       onClick={funcion}
+      $border={border}
+      $height={height}
+      $decoration={decoration}
     >
       <section className="content">
         <Icono $color={color}>{icono}</Icono>
@@ -39,7 +45,7 @@ const Container = styled.button`
   padding: 10px 25px;
   border-radius: 16px;
   background-color: ${(props) => props.$bgcolor};
-  border: 2px solid rgba(50, 50, 50, 0.2);
+  border: ${(props) => props.$border} solid rgba(50, 50, 50, 0.2);
   border-bottom: 5px solid rgba(50, 50, 50, 0.2);
   transform: translate(0, -3px);
   cursor: pointer;
@@ -49,13 +55,26 @@ const Container = styled.button`
   align-items: center;
   justify-content: center;
   width: ${(props) => props.$width};
+  height: ${(props) => props.$height};
+  overflow: hidden;
+  &::before {
+    content: "";
+    display: ${(props) => props.$decoration};
+    width: 40px;
+    height: 40px;
+    background-color: rgba(251, 251, 251, 0.25);
+    position: absolute;
+    border-radius: 50%;
+    bottom: -15px;
+    right: -15px;
+  }
   .content {
     display: flex;
     gap: 12px;
   }
   &:active {
     transform: translate(0, 0);
-    border-bottom: 2px solid rgba(50, 50, 50, 0.2);
+    border-bottom: ${(props) => props.$border} solid rgba(50, 50, 50, 0.2);
   }
   &[disabled] {
     background-color: #646464;
