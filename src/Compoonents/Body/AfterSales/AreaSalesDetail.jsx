@@ -18,5 +18,20 @@ export const AreaSalesDetail = () => {
   );
 };
 
-const ItemSales = styled.section``;
-const AreaSalesDetails = styled.section``;
+const AreaSalesDetails = styled.section`
+  display: flex;
+  width: 100%;
+`;
+const ItemSales = styled.section`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  .content-description {
+    display: flex;
+    flex-direction: column;
+    .description {
+      font-weight: 700;
+      font-size: 20px;
+    }
+  }
+`;

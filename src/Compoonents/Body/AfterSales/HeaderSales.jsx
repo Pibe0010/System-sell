@@ -44,16 +44,18 @@ export const HeaderSales = () => {
 
 const Header = styled.div`
   grid-area: header;
-  background-color: rgba(21, 248, 5, 0.5);
   display: flex;
   height: 100%;
-  border-bottom: 2px solid ${({ theme }) => theme.color2};
   flex-direction: column;
+  gap: 10px;
+  @media ${Device.desktop} {
+    border-bottom: 2px solid ${({ theme }) => theme.color2};
+  }
   .content-header {
     width: 100%;
     display: grid;
     grid-template:
-      " areaOne areaTwo"
+      "areaOne areaTwo"
       "areaThree areaThree";
     .areaOne {
       grid-area: areaOne;
@@ -83,6 +85,9 @@ const Header = styled.div`
     grid-template:
       "area-two area-two"
       "area-one area-one";
+    gap: 10px;
+    height: 100%;
+    align-items: center;
     .area-one {
       grid-area: area-one;
     }
