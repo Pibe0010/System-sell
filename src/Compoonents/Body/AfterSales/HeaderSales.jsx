@@ -1,10 +1,46 @@
 import styled from "styled-components";
-import { BtnOne, Clock, InputText2 } from "../../../index.js";
+import {
+  BtnOne,
+  Clock,
+  DropDawnList,
+  InputText2,
+  useProductsStore,
+} from "../../../index.js";
 import { v } from "../../../Styles/variables.jsx";
 import { Device } from "../../../Styles/BreakPionts.jsx";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useEffect, useRef, useState } from "react";
 
 export const HeaderSales = () => {
+  const [stateToggleList, setStateToggleList] = useState(false);
+  const [stateReader, setStateReader] = useState(true);
+  const [stateKeyboard, setStateKeyboard] = useState(false);
+  const { setSearch, dataProduct, selectProduct } = useProductsStore();
+  const inputRef = useRef(null);
+
+  const handlerSearch = (e) => {
+    setSearch(e.target.value);
+    let text = e.target.value;
+
+    if (text.trim() === "" || stateReader) {
+      setStateToggleList(false);
+    } else {
+      setStateToggleList(true);
+    }
+  };
+
+  const onFocusClick = () => {
+    inputRef.current.focus();
+
+    inputRef.current.value.trim() === ""
+      ? setStateToggleList(false)
+      : setStateToggleList(true);
+  };
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <Header>
       <section className="content-header">
@@ -31,8 +67,20 @@ export const HeaderSales = () => {
       <section className="search-content">
         <article className="area-one">
           <InputText2>
-            <input className="form__field" type="text" placeholder="Search" />
+            <input
+              className="form__field"
+              type="text"
+              placeholder="Search"
+              onChange={handlerSearch}
+              ref={inputRef}
+            />
           </InputText2>
+          <DropDawnList
+            state={stateToggleList}
+            data={dataProduct}
+            setState={() => setStateToggleList(!stateToggleList)}
+            funcion={selectProduct}
+          />
         </article>
         <article className="area-two">
           <BtnOne
@@ -41,6 +89,18 @@ export const HeaderSales = () => {
               <Icon icon="material-symbols-light:barcode-reader-outline-sharp" />
             }
             border="2px"
+            color={stateReader ? "#fff" : ({ theme }) => theme.text}
+            bgcolor={
+              stateReader
+                ? "rgba(101, 26, 222, 0.398)"
+                : ({ theme }) => theme.bgtotal
+            }
+            funcion={() => {
+              setStateReader(true);
+              setStateKeyboard(false);
+              setStateToggleList(false);
+              onFocusClick();
+            }}
           />
           <BtnOne
             titulo="Keyboard"
@@ -48,6 +108,17 @@ export const HeaderSales = () => {
               <Icon icon="material-symbols-light:keyboard-outline-rounded" />
             }
             border="2px"
+            color={stateKeyboard ? "#fff" : ({ theme }) => theme.text}
+            bgcolor={
+              stateKeyboard
+                ? "rgba(101, 26, 222, 0.398)"
+                : ({ theme }) => theme.bgtotal
+            }
+            funcion={() => {
+              setStateReader(false);
+              setStateKeyboard(true);
+              onFocusClick();
+            }}
           />
         </article>
       </section>
