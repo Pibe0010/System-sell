@@ -7,12 +7,36 @@ export const AreaKeyboardSales = () => {
     <Container>
       <section className="type-sale">
         <article className="box">
-          <BtnOne titulo="CASH" border="0" height="70px" width="100%" />
-          <BtnOne titulo="CREDITS" border="0" height="70px" width="100%" />
+          <BtnOne
+            titulo="CASH"
+            border="0"
+            height="70px"
+            width="100%"
+            bgcolor="rgba(19, 133, 13, 0.507)"
+          />
+          <BtnOne
+            titulo="CREDITS"
+            border="0"
+            height="70px"
+            width="100%"
+            bgcolor="rgba(133, 13, 13, 0.507)"
+          />
         </article>
         <article className="box">
-          <BtnOne titulo="CARD" border="0" height="70px" width="100%" />
-          <BtnOne titulo="MIXED" border="0" height="70px" width="100%" />
+          <BtnOne
+            titulo="CARD"
+            border="0"
+            height="70px"
+            width="100%"
+            bgcolor="rgba(133, 79, 13, 0.507)"
+          />
+          <BtnOne
+            titulo="MIXED"
+            border="0"
+            height="70px"
+            width="100%"
+            bgcolor="rgba(49, 13, 133, 0.507)"
+          />
         </article>
       </section>
       <section className="total">
@@ -38,7 +62,7 @@ const Container = styled.div`
   justify-content: space-between;
   position: absolute;
   bottom: 10px;
-  width: 100%;
+  width: calc(100% - 5px);
   border-radius: 15px;
   @media ${Device.desktop} {
     position: relative;

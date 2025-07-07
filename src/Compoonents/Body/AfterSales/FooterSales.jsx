@@ -15,9 +15,14 @@ export const FooterSales = () => {
 
 const Footer = styled.section`
   grid-area: footer;
-  background-color: rgba(137, 5, 252, 0.5);
   display: none;
+  align-items: center;
   @media ${Device.desktop} {
     display: flex;
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 `;
