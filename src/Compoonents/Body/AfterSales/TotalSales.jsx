@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BtnOne } from "../../../index.js";
 import { Device } from "../../../Styles/BreakPionts.jsx";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const TotalSales = () => {
   return (
@@ -13,8 +14,19 @@ export const TotalSales = () => {
       </section>
       <section className="content-total">
         <section className="content-title">
-          <BtnOne titulo="CHARGE" />
-          <BtnOne titulo="..." />
+          <BtnOne
+            titulo="BUY"
+            icono={<Icon icon="fa:money" />}
+            bgcolor="#fff"
+            color="#207c33"
+            border="2px"
+          />
+          <BtnOne
+            titulo="..."
+            icono={<Icon icon="icon-park-twotone:other" />}
+            bgcolor="#0be81e"
+            border="2px"
+          />
         </section>
         <span>$ 9.99</span>
       </section>

@@ -6,6 +6,7 @@ import {
   Sidebar,
   useThemeStore,
   LoginPage,
+  SwitchHamburger,
 } from "./index.js";
 import { Device } from "./Styles/BreakPionts.jsx";
 import { useState } from "react";
@@ -29,7 +30,9 @@ function App() {
                 setState={() => setSiderbarOpen(!siderbarOpen)}
               />
             </section>
-            <section className="contentMenuHamburger">Hamburger</section>
+            <section className="contentMenuHamburger">
+              <SwitchHamburger />
+            </section>
             <section className="contentRouters">
               <MyRoutes />
             </section>

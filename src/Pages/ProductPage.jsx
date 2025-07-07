@@ -23,7 +23,7 @@ export const ProductPage = () => {
     refetchOnWindowFocus: false,
   });
 
-  const {} = useQuery({
+  useQuery({
     queryKey: ["search product", search],
     queryFn: () =>
       searchProduct({ id_company: dataCompany?.id, search: search }),
@@ -31,14 +31,14 @@ export const ProductPage = () => {
     refetchOnWindowFocus: false,
   });
 
-  const {} = useQuery({
+  useQuery({
     queryKey: ["add branch", dataCompany?.id],
     queryFn: () => addBranches({ id_company: dataCompany?.id }),
     enabled: !!dataCompany,
     refetchOnWindowFocus: false,
   });
 
-  const {} = useQuery({
+  useQuery({
     queryKey: ["add cetegories", dataCompany?.id],
     queryFn: () => addCategories({ id_company: dataCompany?.id }),
     enabled: !!dataCompany,

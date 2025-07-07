@@ -21,9 +21,10 @@ export const AfterSalesTemplate = () => {
 };
 
 const Container = styled.div`
-  height: calc(100vh - 20px);
+  height: calc(100vh - 60px);
   display: grid;
   padding: 10px;
+  padding-top: 50px;
   gap: 10px;
   grid-template:
     "header" 230px

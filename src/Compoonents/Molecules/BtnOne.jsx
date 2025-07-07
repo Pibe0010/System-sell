@@ -51,7 +51,7 @@ const Container = styled.button`
   cursor: pointer;
   transition: 0.2s;
   transition-timing-function: linear;
-  color: rgb(${(props) => props.$color});
+  color: ${(props) => props.$color};
   align-items: center;
   justify-content: center;
   width: ${(props) => props.$width};
