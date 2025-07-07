@@ -32,7 +32,7 @@ const Container = styled.div`
     grid-template:
       "header header" 140px
       "main main"
-      "footer footer";
+      "footer footer" 60px;
   }
   color: ${({ theme }) => theme.text};
 `;

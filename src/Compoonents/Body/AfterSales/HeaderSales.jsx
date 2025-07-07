@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BtnOne, Clock, InputText2 } from "../../../index.js";
 import { v } from "../../../Styles/variables.jsx";
 import { Device } from "../../../Styles/BreakPionts.jsx";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const HeaderSales = () => {
   return (
@@ -34,8 +35,20 @@ export const HeaderSales = () => {
           </InputText2>
         </article>
         <article className="area-two">
-          <BtnOne titulo="Reader" />
-          <BtnOne titulo="Keyboard" />
+          <BtnOne
+            titulo="Reader"
+            icono={
+              <Icon icon="material-symbols-light:barcode-reader-outline-sharp" />
+            }
+            border="2px"
+          />
+          <BtnOne
+            titulo="Keyboard"
+            icono={
+              <Icon icon="material-symbols-light:keyboard-outline-rounded" />
+            }
+            border="2px"
+          />
         </article>
       </section>
     </Header>
