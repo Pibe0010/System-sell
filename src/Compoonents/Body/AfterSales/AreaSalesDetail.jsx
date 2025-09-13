@@ -26,6 +26,7 @@ const ItemSales = styled.section`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-right: 10px;
   .content-description {
     display: flex;
     flex-direction: column;

@@ -99,11 +99,7 @@ export const RegisterCategories = ({ onClose, dataSelect, action }) => {
         <div className="sub-contenedor">
           <div className="headers">
             <section>
-              <h1>
-                {action == "Update"
-                  ? "Updated categorie"
-                  : "Register new categorie"}
-              </h1>
+              <h1>{action == "Update" ? "Updated category" : "Register new category"}</h1>
             </section>
 
             <section>
@@ -126,11 +122,7 @@ export const RegisterCategories = ({ onClose, dataSelect, action }) => {
               bgcolor="rgb(183, 183, 182)"
               icono={<v.iconosupabase />}
             />
-            <input
-              type="file"
-              ref={ref}
-              onChange={(e) => prepararImagen(e)}
-            ></input>
+            <input type="file" ref={ref} onChange={(e) => prepararImagen(e)}></input>
           </PictureContainer>
           <form className="formulario" onSubmit={handleSubmit(handleSub)}>
             <section className="form-subcontainer">
@@ -146,9 +138,7 @@ export const RegisterCategories = ({ onClose, dataSelect, action }) => {
                     })}
                   />
                   <label className="form__label">categorie</label>
-                  {errors.description?.type === "required" && (
-                    <p>Required field</p>
-                  )}
+                  {errors.description?.type === "required" && <p>Required field</p>}
                 </InputText>
               </article>
 
@@ -162,11 +152,7 @@ export const RegisterCategories = ({ onClose, dataSelect, action }) => {
                 </div>
               </article>
 
-              <BtnOne
-                icono={<v.iconoguardar />}
-                titulo="Guardar"
-                bgcolor="#0ba6f9"
-              />
+              <BtnOne icono={<v.iconoguardar />} titulo="Guardar" bgcolor="#0ba6f9" />
             </section>
           </form>
         </div>

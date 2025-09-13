@@ -24,17 +24,13 @@ export const HeaderSales = () => {
 
     if (text.trim() === "" || stateReader) {
       setStateToggleList(false);
-    } else {
+    } else if (stateKeyboard) {
       setStateToggleList(true);
     }
   };
 
   const onFocusClick = () => {
     inputRef.current.focus();
-
-    inputRef.current.value.trim() === ""
-      ? setStateToggleList(false)
-      : setStateToggleList(true);
   };
 
   useEffect(() => {
@@ -85,15 +81,11 @@ export const HeaderSales = () => {
         <article className="area-two">
           <BtnOne
             titulo="Reader"
-            icono={
-              <Icon icon="material-symbols-light:barcode-reader-outline-sharp" />
-            }
+            icono={<Icon icon="material-symbols-light:barcode-reader-outline-sharp" />}
             border="2px"
             color={stateReader ? "#fff" : ({ theme }) => theme.text}
             bgcolor={
-              stateReader
-                ? "rgba(101, 26, 222, 0.398)"
-                : ({ theme }) => theme.bgtotal
+              stateReader ? "rgba(101, 26, 222, 0.398)" : ({ theme }) => theme.bgtotal
             }
             funcion={() => {
               setStateReader(true);
@@ -104,15 +96,11 @@ export const HeaderSales = () => {
           />
           <BtnOne
             titulo="Keyboard"
-            icono={
-              <Icon icon="material-symbols-light:keyboard-outline-rounded" />
-            }
+            icono={<Icon icon="material-symbols-light:keyboard-outline-rounded" />}
             border="2px"
             color={stateKeyboard ? "#fff" : ({ theme }) => theme.text}
             bgcolor={
-              stateKeyboard
-                ? "rgba(101, 26, 222, 0.398)"
-                : ({ theme }) => theme.bgtotal
+              stateKeyboard ? "rgba(101, 26, 222, 0.398)" : ({ theme }) => theme.bgtotal
             }
             funcion={() => {
               setStateReader(false);
@@ -149,6 +137,8 @@ const Header = styled.div`
     }
     .areaThree {
       grid-area: areaThree;
+      justify-content: center;
+      align-items: center;
     }
     @media ${Device.desktop} {
       display: flex;
@@ -161,6 +151,7 @@ const Header = styled.div`
       img {
         width: 30px;
         object-fit: contain;
+        border: solid 2px ${({ theme }) => theme.color2};
       }
     }
   }
@@ -201,6 +192,7 @@ const ContentUser = styled.div`
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
+    background-color: ${({ theme }) => theme.color2};
     img {
       width: 100%;
       object-fit: cover;
