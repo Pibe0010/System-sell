@@ -1,15 +1,7 @@
 import styled from "styled-components";
 import { Device } from "../../Styles/BreakPionts.jsx";
 
-export function DropDawnList({
-  data,
-  setState,
-  funcion,
-  scroll,
-  top,
-  state,
-  refetch,
-}) {
+export function DropDawnList({ data, setState, funcion, scroll, top, state, refetch }) {
   if (!state) return;
   function seleccionar(params) {
     if (refetch) refetch();
@@ -48,7 +40,7 @@ const Container = styled.div`
   gap: 10px;
   z-index: 3;
   height: 230px;
-  width: 95%;
+  width: 93%;
   @media ${() => Device.tablet} {
   }
   .contentClose {
